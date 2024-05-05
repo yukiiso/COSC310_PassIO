@@ -1,0 +1,43 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- PAGE settings -->
+  <link rel="icon" href="../static/assets/images/favicon.png">
+  <title>My Tickets</title>
+  <meta name="description" content="All tickets purchased by user">
+  <meta name="keywords" content="Events, purchase, ticket, PassIO">
+{% include 'cssdependencies.html' %}
+</head>
+<body class="text-center">
+  {% include 'navbar.html' %}
+  <div class="container">
+    <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+    <h1 class="display-4 mt-3">My Tickets</h1>
+    {% for ticket_info in ticket_event_info %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title" style="color: yellow;">{{ ticket_info.event_name }}</h3>
+          <p class="card-text">{{ ticket_info.event_description }}</p>
+          <p class="card-text">Date: {{ ticket_info.event_date }}</p>
+          <p class="card-text">Location: {{ ticket_info.event_location }}</p>
+          <p class="card-text">${{ "%.2f"|format(ticket_info.ticket_price) }}</p>
+        </div>
+      </div>
+    {% else %}
+      <p>You have no tickets.</p>
+    {% endfor %}
+  </div>
+  {% include 'footer.html' %}
+</body>
+</html>

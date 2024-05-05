@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- PAGE settings -->
+  <link rel="icon" href="../static/assets/images/favicon.png">
+  <title>Event Entry</title>
+  <meta name="description" content="Enter new event in PassIO">
+  <meta name="keywords" content="Event entry PassIO">
+{% include 'cssdependencies.html' %}
+</head>
+
+<body class="text-center">
+  <!-- Navbar -->
+{% include 'navbar.html' %}
+  <!-- Cover -->
+<div class="d-flex align-items-center section-fade-in-out" style="background-image: url(../static/assets/images/cover.jpg);">
+  <div class="container">
+    <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+    <div class="row">
+      <div class="col-12 mt-3">
+        <h1 class="display-4">Event Entry</h1>
+          <form action="/events_submit" method="post" class="needs-validation">
+            <div class="mb-3">
+              <label for="e_name">Name</label>
+              <input type="text" class="form-control" id="e_name" name="e_name" required>
+            </div>
+            <div class="mb-3">
+              <label for="e_location">Location</label>
+              <input type="text" class="form-control" id="e_location" name="e_location" required>
+            </div>
+            <div class="mb-3">
+              <label for="e_artist">Artist</label>
+              <input type="text" class="form-control" id="e_artist" name="e_artist" required>
+            </div>
+            <div class="mb-3">
+              <label for="e_genre">Genre</label>
+              <input type="text" class="form-control" id="e_genre" name="e_genre" required>
+            </div>
+            <div class="mb-3">
+              <label for="e_description">Description</label>
+              <textarea class="form-control" id="e_description" name="e_description" required></textarea>
+            </div>
+            <!-- New fields for event date and number of tickets -->
+            <div class="mb-3">
+              <label for="e_date">Event Date</label>
+              <input type="date" class="form-control" id="e_date" name="e_date" required>
+            </div>
+            <div class="mb-3">
+              <label for="e_tickets">Number of Tickets</label>
+              <input type="number" class="form-control" id="e_tickets" name="e_tickets" min="1" required>
+            </div>
+            <div class="mb-3">
+              <label for="e_price">Price of Tickets</label>
+              <input type="number" class="form-control" id="e_price" name="e_price" min="1" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'footer.html' %}
+</body>
+
+</html>

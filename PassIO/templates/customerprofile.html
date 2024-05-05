@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- PAGE settings -->
+  <link rel="icon" href="../static/assets/images/favicon.png">
+  <title>Customer Profile</title>
+  <meta name="description" content="Write description here.">
+  <meta name="keywords" content="Write keywords here.">
+{% include 'cssdependencies.html' %}
+</head>
+
+<body class="text-center">
+  <!-- Navbar -->
+  {% include 'navbar.html' %}
+  <div class="py-1">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1 class="display-4">Profile</h1>
+            </div>
+          </div>
+        </div>
+  </div>
+<!-- Profile Information Section -->
+<div class="py-2">
+  <div class="container">
+    <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+    <div class="row justify-content-center">
+      <!-- User's profile information -->
+      <div class="col-md-8 text-center">
+        <h2>{{ CurrentUser.name | default('Name not provided') }}</h2>
+        <p>Email: {{ CurrentUser.email | default('Email not provided') }}</p>
+        <p>Username: {{ CurrentUser.username | default('Username not provided') }}</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form class="needs-validation" novalidate="" action="/update_profile" method="post">
+          <div class="mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ CurrentUser.name | default('') }}" required>
+            <div class="invalid-feedback">Valid name is required.</div>
+          </div>
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ CurrentUser.email | default('') }}" required>
+            <div class="invalid-feedback">Please enter a valid email address.</div>
+          </div>
+          <div class="mb-3">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ CurrentUser.username | default('') }}" required>
+            <div class="invalid-feedback">Your username is required.</div>
+          </div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Update Profile</button>
+          </form>
+    </div>
+  </div>
+</div>
+<div class="container text-center mt-3">
+    <a href="/logout" class="btn btn-primary">Sign Out</a>
+</div>
+  {% include 'footer.html' %}
+</body>
+
+</html>

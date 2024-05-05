@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- PAGE settings -->
+  <link rel="icon" href="../static/assets/images/favicon.png">
+  <title>PassIO</title>
+  <meta name="keywords" content="PassIO, homepage, events, tickets">
+{% include 'cssdependencies.html' %}
+</head>
+
+<body class="text-center">
+  <!-- Navbar -->
+  {% include 'navbar.html' %}
+  <!-- Search bar -->
+  <form action="/search" class="container" method="post" id="search_form">
+      <input type="date" id="date-filter" name="search_date">
+      <input type="text" id="keyword-search" placeholder="Search by Artist, Event, Genre or Venue" name="search_term">
+      <button type="submit">Search</button>
+  </form>
+  <!-- Events -->
+  <div class="py-5" id="speakers">
+    <div class="container">
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}" role="alert">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+      <div class="row">
+        <div class="col-12">
+          <h1>Events</h1>
+        </div>
+      </div>
+      <div class="row">
+        {% for event in events %}
+        <div class="col-lg-4 col-md-6">
+          <a href="/eventDetails?id={{ event._id }}">
+            <!-- include img-fluid in class attribute if you want original image size -->
+            <img src="../static/assets/images/image{{ event.event_id }}.jpg"
+              class="center-block my-3 shadowed" width="300" height="300">
+            <h3 class="mb-0"><b>{{ event.name }}</b></h3>
+            <p class="text-muted">{{ event.artist }}</p>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  {% include 'footer.html' %}
+</body>
+
+</html>
